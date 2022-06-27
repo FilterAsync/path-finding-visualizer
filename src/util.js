@@ -18,10 +18,7 @@ export function strToCoord(str) {
 	}
 	const x = +str.substring(1, separatorIdx);
 	const y = +str.substring(1 + separatorIdx, str.length - 1);
-	if (Number.isNaN(x) || Number.isNaN(y)) {
-		return false;
-	}
-	if (x < 0 || y < 0) {
+	if (x < 0 || y < 0 || Number.isNaN(x) || Number.isNaN(y)) {
 		return false;
 	}
 	return [x, y];
@@ -44,20 +41,17 @@ export function isValidMatrixStr(str) {
 		let charStartIdx = openBracketIdx;
 		for (let i = openBracketIdx + 1; i <= closeBracketIdx - 1; i++) {
 			const char = _str[i];
-			if (i - charStartIdx !== 1 && char !== ',') {
-				return false;
-			}
-			if (i - charStartIdx === 1 && char === ',') {
-				return false;
-			}
-			if (Number.isNaN(+char) && char !== ',') {
-				return false;
-			}
-			if (char !== ',' && +char !== 0 && +char !== 1) {
-				return false;
-			}
-			if (char === ',') {
-				charStartIdx = i;
+			switch (true) {
+				case i - charStartIdx !== 1 && char !== ',':
+				case i - charStartIdx === 1 && char === ',':
+				case Number.isNaN(+char) && char !== ',':
+				case char !== ',' && +char !== 0 && +char !== 1:
+					return false;
+				case char === ',':
+					charStartIdx = i;
+					break;
+				default:
+					break;
 			}
 		}
 		if (_str[closeBracketIdx + 1] === ']' && closeBracketIdx + 2 === _str.length) {
