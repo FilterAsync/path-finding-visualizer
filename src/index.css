@@ -1,0 +1,28 @@
+.matrix-col {
+	display: inline-block;
+	padding: 16px;
+}
+
+.obstacle {
+	color: transparent !important;
+	background-color: black !important;
+}
+
+.path {
+	color: black;
+	background-color: white;
+}
+
+.source {
+	background-color: red !important;
+	color: white !important;
+}
+
+.destination {
+	background-color: green !important;
+	color: white !important;
+}
+
+.errorMessage {
+	color: red !important;
+}
