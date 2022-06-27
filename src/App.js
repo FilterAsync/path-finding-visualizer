@@ -81,13 +81,6 @@ function App() {
 		setDest(coord);
 	};
 
-	const onReset = () => {
-		setMatrix(defaultValues.matrix);
-		setSource(defaultValues.source);
-		setDest(defaultValues.dest);
-		setError('');
-	};
-
 	return (
 		<>
 			<div className="flex-container center">
@@ -130,7 +123,6 @@ function App() {
 							<button type="submit" disabled={!!error}>
 								Perform BFS
 							</button>
-							<input type="reset" onClick={onReset} />
 						</div>
 					</form>
 				</div>
