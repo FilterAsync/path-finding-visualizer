@@ -3,7 +3,7 @@ function Matrix(matrix, source, dest) {
 		<div className="matrix" {...props}>
 			{matrix.map((rows, i1) => {
 				const row = (
-					<div key={`row-${i1}`}>
+					<div key={`row-${i1}`} className="matrix-row">
 						{rows.map((col, i2) => {
 							const role = col === 1 ? 'path' : 'obstacle';
 							const isSource = i1 === source[0] && i2 === source[1] ? 'source' : '';
