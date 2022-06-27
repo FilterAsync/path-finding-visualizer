@@ -1,10 +1,38 @@
+html {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.flex-container {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.matrix {
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.flex-container > * {
+	margin-right: 3rem;
+}
+
+.flex > *:last-child {
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.matrix-row {
+	display: flex;
+}
+
 .matrix-col {
-	display: inline-block;
 	padding: 16px;
 }
 
 .obstacle {
-	color: transparent !important;
+	color: white;
 	background-color: black !important;
 }
 
@@ -18,6 +46,13 @@
 	color: white !important;
 }
 
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+
 .destination {
 	background-color: green !important;
 	color: white !important;
@@ -25,4 +60,85 @@
 
 .errorMessage {
 	color: red !important;
+}
+
+p {
+	margin-top: 4px;
+}
+
+textarea[name='matrix'] {
+	width: 300px;
+	height: 120px;
+}
+
+@media (max-width: 1000px) {
+	.flex-container {
+		flex-wrap: wrap-reverse;
+	}
+}
+
+@media (max-width: 552px) {
+	.matrix-col {
+		padding: 8px;
+	}
+}
+
+@media (max-width: 376px) {
+	.matrix-col {
+		padding: 4px;
+	}
+}
+
+@media (max-width: 300px) {
+	.matrix-col {
+		padding: 2px;
+	}
+	textarea[name='matrix'] {
+		width: 200px;
+	}
+}
+
+@media (max-width: 255px) {
+	.matrix-col {
+		padding: 0px;
+	}
+}
+
+label {
+	margin: 5px 10px 5px 0;
+}
+
+button,
+input[type='reset'] {
+	border: 2px solid grey;
+	text-align: center;
+	cursor: pointer;
+	padding: 6px;
+}
+
+button:hover,
+input[type='reset']:hover {
+	background-color: rgb(230, 229, 231);
+}
+
+.button-list-row {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.button-list-row > button,
+input[type='reset'] {
+	margin-right: 1rem;
+}
+
+label {
+	display: inline-block;
+}
+
+input[type='text'],
+textarea {
+	font-family: 'Hack', 'Consolas', 'Courier New', Courier, monospace;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
 }
