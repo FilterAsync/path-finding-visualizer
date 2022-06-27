@@ -54,7 +54,9 @@ function App() {
 			return;
 		}
 		setError('');
-		setMatrix(JSON.parse(str));
+		try {
+			setMatrix(JSON.parse(str));
+		} catch (err) {}
 	};
 
 	const onSourceChanged = (event) => {
@@ -83,37 +85,57 @@ function App() {
 		setMatrix(defaultValues.matrix);
 		setSource(defaultValues.source);
 		setDest(defaultValues.dest);
+		setError('');
 	};
 
 	return (
 		<>
-			<MatrixRepresentation />
+			<div className="flex-container center">
+				<div>
+					<h2>Matrix Representation</h2>
+					<MatrixRepresentation />
+				</div>
+				<div>
+					<h2>Matrix Controller</h2>
+					<form onSubmit={onSubmit}>
+						<div>
+							<label htmlFor="matrix">Matrix:</label>
+							<br />
+							<textarea
+								name="matrix"
+								defaultValue={`[[1,0,1,0,1,0,1,1,1,0,0],[0,0,1,1,1,0,1,0,1,1,0],[1,0,1,0,1,0,0,0,1,1,0],[1,0,1,0,1,1,1,1,1,0,0],[1,0,1,0,0,0,0,0,0,0,1]]`}
+								onChange={onMatrixChanged}
+							/>
+							<p>
+								Put <code>0</code> for obstacle, and <code>1</code> for path. Path movements are up,
+								down, left, right.
+							</p>
+						</div>
+						<div>
+							<label htmlFor="source">Source:</label>
+							<input type="text" name="source" defaultValue="(1,3)" onChange={onSourceChanged} />
+						</div>
+						<br />
+						<div>
+							<label htmlFor="destination">Destination:</label>
+							<input type="text" name="destination" defaultValue="(1,6)" onChange={onDestChanged} />
+						</div>
+						<p>
+							Coordinates must be in the form (<i>x</i>, <i>y</i>).
+						</p>
+						<p hidden={!error} className="errorMessage">
+							{error}
+						</p>
+						<div className="button-list-row">
+							<button type="submit" disabled={!!error}>
+								Perform BFS
+							</button>
+							<input type="reset" onClick={onReset} />
+						</div>
+					</form>
+				</div>
+			</div>
 			<hr />
-			<form onSubmit={onSubmit}>
-				<div>
-					<label htmlFor="matrix">Matrix:</label>
-					<textarea
-						name="matrix"
-						defaultValue={`[[1,0,1,0,1,0,1,1,1,0,0],[0,0,1,1,1,0,1,0,1,1,0],[1,0,1,0,1,0,0,0,1,1,0],[1,0,1,0,1,1,1,1,1,0,0],[1,0,1,0,0,0,0,0,0,0,1]]`}
-						onChange={onMatrixChanged}
-					/>
-				</div>
-				<div>
-					<label htmlFor="source">Source:</label>
-					<input name="source" defaultValue="(1,3)" onChange={onSourceChanged} />
-				</div>
-				<div>
-					<label htmlFor="destination">Destination:</label>
-					<input name="destination" defaultValue="(1,6)" onChange={onDestChanged} />
-				</div>
-				<p hidden={!error} className="errorMessage">
-					{error}
-				</p>
-				<input type="reset" onClick={onReset} />
-				<button type="submit" disabled={!!error}>
-					Perform BFS
-				</button>
-			</form>
 		</>
 	);
 }
