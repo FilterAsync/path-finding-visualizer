@@ -1,24 +1,23 @@
 import { useState } from 'react';
-import { removeAllSpaces, strToCoord, isValidMatrixStr } from './util';
+import {
+	removeAllSpaces,
+	strToCoord,
+	isValidMatrixStr,
+	getRandomEntry,
+	matrixToStr,
+	arrToCoordStr,
+} from './util';
 import BFS from './bfs';
 import Matrix from './components/Matrix';
+import InputField from './components/InputField';
+import matrices from './matrices.json';
 
-const defaultValues = {
-	matrix: [
-		[1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0],
-		[0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0],
-		[1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0],
-		[1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0],
-		[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-	],
-	source: [1, 3],
-	dest: [1, 6],
-};
+const randomMatrix = getRandomEntry(matrices);
 
 function App() {
-	const [matrix, setMatrix] = useState(defaultValues.matrix);
-	const [source, setSource] = useState(defaultValues.source);
-	const [dest, setDest] = useState(defaultValues.dest);
+	const [matrix, setMatrix] = useState(randomMatrix.matrix);
+	const [source, setSource] = useState(randomMatrix.source);
+	const [dest, setDest] = useState(randomMatrix.dest);
 
 	const [error, setError] = useState('');
 
@@ -63,7 +62,7 @@ function App() {
 		const str = removeAllSpaces(event.target.value);
 		const coord = strToCoord(str);
 		if (!coord) {
-			setError('Invalid coordinates');
+			setError('Invalid coordinates.');
 			return;
 		}
 		setError('');
@@ -74,7 +73,7 @@ function App() {
 		const str = removeAllSpaces(event.target.value);
 		const coord = strToCoord(str);
 		if (!coord) {
-			setError('Invalid coordinates');
+			setError('Invalid coordinates.');
 			return;
 		}
 		setError('');
@@ -91,32 +90,40 @@ function App() {
 				<div>
 					<h2>Matrix Controller</h2>
 					<form onSubmit={onSubmit}>
-						<div>
-							<label htmlFor="matrix">Matrix:</label>
-							<br />
-							<textarea
-								name="matrix"
-								defaultValue={`[[1,0,1,0,1,0,1,1,1,0,0],[0,0,1,1,1,0,1,0,1,1,0],[1,0,1,0,1,0,0,0,1,1,0],[1,0,1,0,1,1,1,1,1,0,0],[1,0,1,0,0,0,0,0,0,0,1]]`}
-								onChange={onMatrixChanged}
-							/>
+						<InputField
+							name="matrix"
+							label="Matrix:"
+							textarea={true}
+							defaultValue={matrixToStr(matrix)}
+							onChange={onMatrixChanged}
+						>
 							<p>
 								Put <code>0</code> for obstacle, and <code>1</code> for path.
 							</p>
-							<p>Path movements are up, down, left, right</p>
-						</div>
-						<div>
-							<label htmlFor="source">Source:</label>
-							<input type="text" name="source" defaultValue="(1,3)" onChange={onSourceChanged} />
-						</div>
-						<br />
+							<p>
+								<b>Note:</b> Path movements are up, down, left, right.
+							</p>
+						</InputField>
+						<InputField
+							name="source"
+							label="Source:"
+							type="text"
+							defaultValue={arrToCoordStr(source)}
+							onChange={onSourceChanged}
+						/>
 						<div>
 							<label htmlFor="destination">Destination:</label>
-							<input type="text" name="destination" defaultValue="(1,6)" onChange={onDestChanged} />
+							<input
+								type="text"
+								name="destination"
+								defaultValue={arrToCoordStr(dest)}
+								onChange={onDestChanged}
+							/>
 						</div>
 						<p>
 							Coordinates must be in the form (<i>x</i>, <i>y</i>).
 						</p>
-						<p hidden={!error} className="errorMessage">
+						<p hidden={!error} className="error-message">
 							{error}
 						</p>
 						<div className="button-list-row">
@@ -133,6 +140,7 @@ function App() {
 					href="https://github.com/FilterAsync/react-shortest-path"
 					target="_blank"
 					rel="noopener noreferrer"
+					title="Github repository"
 				>
 					<svg
 						aria-label="Github"
