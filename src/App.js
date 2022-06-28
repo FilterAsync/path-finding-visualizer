@@ -100,9 +100,9 @@ function App() {
 								onChange={onMatrixChanged}
 							/>
 							<p>
-								Put <code>0</code> for obstacle, and <code>1</code> for path. Path movements are up,
-								down, left, right.
+								Put <code>0</code> for obstacle, and <code>1</code> for path.
 							</p>
+							<p>Path movements are up, down, left, right</p>
 						</div>
 						<div>
 							<label htmlFor="source">Source:</label>
