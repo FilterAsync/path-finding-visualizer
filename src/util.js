@@ -5,6 +5,10 @@ export function removeAllSpaces(str) {
 	return str.replace(/\s/g, '');
 }
 
+export function getRandomEntry(arr) {
+	return arr[0 | (Math.random() * arr.length)];
+}
+
 export function strToCoord(str) {
 	if (typeof str !== 'string') {
 		return false;
@@ -71,4 +75,23 @@ export function isValidMatrixStr(str) {
 		_str = _str.substring(closeBracketIdx + 2);
 	}
 	return true;
+}
+
+export function matrixToStr(matrix) {
+	let str = '';
+	for (let i = 0; i < matrix.length; i++) {
+		let row = matrix[i];
+		row = '[' + row + ']';
+		if (i !== matrix.length - 1) {
+			row += ',';
+		}
+		str += row;
+	}
+	return '[' + str + ']';
+}
+
+// haha typescript die
+
+export function arrToCoordStr(arr) {
+	return '(' + arr + ')';
 }
