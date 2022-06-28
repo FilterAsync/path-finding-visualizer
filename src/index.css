@@ -21,7 +21,6 @@ html {
 
 .flex-container > * {
 	margin-right: 3rem;
-	flex-basis: 0;
 }
 
 * {
@@ -34,6 +33,7 @@ html {
 
 .matrix-col {
 	padding: 16px;
+	text-align: center;
 }
 
 .obstacle {
@@ -63,7 +63,7 @@ html {
 	color: white !important;
 }
 
-.errorMessage {
+.error-message {
 	color: red !important;
 }
 
@@ -82,8 +82,11 @@ p {
 }
 
 textarea[name='matrix'] {
+	display: block;
 	width: 300px;
 	height: 120px;
+	max-width: 400px;
+	max-height: 240px;
 }
 
 @media (max-width: 1000px) {
@@ -157,6 +160,15 @@ input[type='text'],
 textarea {
 	font-family: 'Hack', 'Consolas', 'Courier New', Courier, monospace;
 	padding: 8px;
-	border: 1px solid #ccc;
+	border: 1px solid #cccccc;
 	border-radius: 4px;
+}
+
+hr {
+	border-top: 1px solid rgb(200, 201, 199);
+	opacity: 0.85;
+}
+
+div.input-field {
+	margin: 4px 0 4px 0;
 }
