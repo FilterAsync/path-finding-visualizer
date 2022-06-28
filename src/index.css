@@ -11,12 +11,17 @@ html {
 	font-family: 'Times New Roman', Times, serif;
 }
 
-.flex-container > * {
-	margin-right: 3rem;
+@media (min-width: 1001px) {
+	.matrix {
+		max-width: 50vw;
+		max-height: 75vh;
+		overflow: auto;
+	}
 }
 
-.flex > *:last-child {
-	margin: 0;
+.flex-container > * {
+	margin-right: 3rem;
+	flex-basis: 0;
 }
 
 * {
@@ -62,8 +67,18 @@ html {
 	color: red !important;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	line-height: 25px;
+}
+
 p {
 	margin-top: 4px;
+	margin-bottom: 8px;
 }
 
 textarea[name='matrix'] {
@@ -74,6 +89,9 @@ textarea[name='matrix'] {
 @media (max-width: 1000px) {
 	.flex-container {
 		flex-wrap: wrap-reverse;
+	}
+	.flex-container > * {
+		margin-right: 0;
 	}
 }
 
