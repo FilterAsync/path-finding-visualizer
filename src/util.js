@@ -16,10 +16,18 @@ export function strToCoord(str) {
 	if (separatorIdx === -1) {
 		return false;
 	}
-	const x = +str.substring(1, separatorIdx);
-	const y = +str.substring(1 + separatorIdx, str.length - 1);
-	if (x < 0 || y < 0 || Number.isNaN(x) || Number.isNaN(y)) {
-		return false;
+	const _x = str.substring(1, separatorIdx);
+	const _y = str.substring(1 + separatorIdx, str.length - 1);
+	const x = Number.parseInt(_x, 10);
+	const y = Number.parseInt(_y, 10);
+	switch (true) {
+		case x < 0 || y < 0 || Number.isNaN(x) || Number.isNaN(y):
+		case !(Number.isInteger(x) && Number.isInteger(y)):
+		case _x.includes('.') || _y.includes('.'):
+		case (x === 0 && _x !== '0') || (y === 0 && _y !== '0'):
+			return false;
+		default:
+			break;
 	}
 	return [x, y];
 }
