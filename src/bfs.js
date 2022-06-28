@@ -1,7 +1,3 @@
-function address(entry) {
-	return `${entry[0]},${entry[1]}`;
-}
-
 function neighbors(M, row, col) {
 	const neighbors = [
 		[row - 1, col],
@@ -23,27 +19,27 @@ function validate(M, row, col) {
 }
 
 function pathify(pre, s, v, res) {
-	if (address(s) === address(v)) {
+	if (s === v) {
 		res.push(s);
-	} else if (!pre[address(v)]) {
+	} else if (!pre[v]) {
 		return;
 	} else {
 		res.push(v);
-		pathify(pre, s, pre[address(v)], res);
+		pathify(pre, s, pre[v], res);
 	}
 	return res;
 }
 
 export default function BFS(M, row1, col1, row2, col2) {
-	const src = [row1, col1];
-	const des = [row2, col2];
-	if (!M[row1][col1] || !M[row2][col2]) {
+	if (!M[row1] || !M[row1][col1] || !M[row2] || !M[row2][col2]) {
 		return -1;
 	}
+	const src = [row1, col1];
+	const des = [row2, col2];
 	const queue = [src];
 	M[row1][col1] = 0;
 	const pre = {};
-	pre[address(src)] = 0;
+	pre[src] = 0;
 	const seen = new Set();
 	while (queue.length > 0) {
 		const u = queue.shift();
@@ -51,12 +47,12 @@ export default function BFS(M, row1, col1, row2, col2) {
 		if (row === row2 && col === col2) {
 			return pathify(pre, src, des, []);
 		}
-		seen.add(address(u));
+		seen.add(u);
 		for (const v of neighbors(M, row, col)) {
 			const [row, col] = v;
-			if (!seen.has(address(v))) {
+			if (!seen.has(v)) {
 				M[row][col] = 0;
-				pre[address(v)] = u;
+				pre[v] = u;
 				queue.push(v);
 			}
 		}
