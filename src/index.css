@@ -81,7 +81,7 @@ p {
 	margin-bottom: 8px;
 }
 
-textarea[name='matrix'] {
+textarea#matrix {
 	display: block;
 	width: 300px;
 	height: 120px;
@@ -111,7 +111,7 @@ textarea[name='matrix'] {
 	.matrix-col {
 		padding: 2px;
 	}
-	textarea[name='matrix'] {
+	textarea#matrix {
 		width: 200px;
 	}
 }
