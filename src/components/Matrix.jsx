@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import MatrixContext from '../MatrixContext';
+import { CreateUUID } from '../util';
 
 function Matrix(props) {
 	const { matrix, source, dest } = useContext(MatrixContext);
@@ -14,7 +15,7 @@ function Matrix(props) {
 							const isDes = i1 === dest[0] && i2 === dest[1] ? 'destination' : '';
 							return (
 								<span
-									key={`key-${i1}-${i2}`}
+									key={CreateUUID() + `:${i1}${i2}`}
 									id={col === 1 ? `${i1},${i2}` : undefined}
 									className={'matrix-col ' + role + ' ' + (isSource || isDes)}
 								>
