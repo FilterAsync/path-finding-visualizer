@@ -6,8 +6,6 @@ A web app that utilizes the Breadth-first search algorithm to find the shortest 
 
 You can see it [here](https://filterasync.github.io/react-shortest-path).
 
-**This project is incomplete:** More changes will be made later.
-
 ## Usage
 
 Enter a valid matrix in the matrix field, and specify source and destination. Make sure that both source and destination are valid:
