@@ -93,9 +93,6 @@ textarea[name='matrix'] {
 	.flex-container {
 		flex-wrap: wrap-reverse;
 	}
-	.flex-container > * {
-		margin-right: 0;
-	}
 }
 
 @media (max-width: 552px) {
