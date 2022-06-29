@@ -35,15 +35,13 @@ export function Controller({
 				defaultValue={arrToCoordStr(source)}
 				onChange={onSourceChanged}
 			/>
-			<div>
-				<label htmlFor="destination">Destination:</label>
-				<input
-					type="text"
-					name="destination"
-					defaultValue={arrToCoordStr(dest)}
-					onChange={onDestChanged}
-				/>
-			</div>
+			<InputField
+				name="destination"
+				label="Destination:"
+				type="text"
+				defaultValue={arrToCoordStr(dest)}
+				onChange={onDestChanged}
+			/>
 			<p>
 				Coordinates must be in the form (<i>x</i>, <i>y</i>).
 			</p>
