@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { removeAllSpaces, strToCoord, isValidMatrixStr, getRandomEntry } from './util';
 import BFS from './bfs';
 import Matrix from './components/Matrix';
 import Controller from './components/Controller';
 import matrices from './matrices.json';
+import MatrixContext from './MatrixContext';
 
 const randomMatrix = getRandomEntry(matrices);
 
@@ -13,8 +14,6 @@ function App() {
 	const [dest, setDest] = useState(randomMatrix.dest);
 
 	const [error, setError] = useState('');
-
-	const MatrixRepresentation = Matrix(matrix, source, dest);
 
 	const onSubmit = (event) => {
 		event.preventDefault();
@@ -74,18 +73,29 @@ function App() {
 	};
 
 	return (
-		<>
+		<MatrixContext.Provider
+			value={{
+				matrix,
+				source,
+				dest,
+			}}
+		>
 			<div className="flex-container center">
 				<div>
 					<h2>Matrix Representation</h2>
-					<MatrixRepresentation />
+					<Matrix />
 				</div>
 				<div>
 					<h2>Matrix Controller</h2>
-					{Controller(
-						{ matrix, source, dest, error },
-						{ onSubmit, onMatrixChanged, onSourceChanged, onDestChanged },
-					)()}
+					{
+						<Controller
+							error={error}
+							onSubmit={onSubmit}
+							onMatrixChanged={onMatrixChanged}
+							onSourceChanged={onSourceChanged}
+							onDestChanged={onDestChanged}
+						/>
+					}
 				</div>
 			</div>
 			<hr />
@@ -108,7 +118,7 @@ function App() {
 					</svg>
 				</a>
 			</div>
-		</>
+		</MatrixContext.Provider>
 	);
 }
 

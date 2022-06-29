@@ -1,5 +1,9 @@
-function Matrix(matrix, source, dest) {
-	return (props) => (
+import { useContext } from 'react';
+import MatrixContext from '../MatrixContext';
+
+function Matrix(props) {
+	const { matrix, source, dest } = useContext(MatrixContext);
+	return (
 		<div className="matrix" {...props}>
 			{matrix.map((rows, i1) => {
 				const row = (
