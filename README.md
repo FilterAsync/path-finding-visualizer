@@ -2,9 +2,9 @@
 
 ## What is this?
 
-A web app that utilizes the Breadth-first search algorithm to find the shortest path between two vertices. Developed using React.js framework.
+A web app that utilizes the Breadth-first search algorithm to find the shortest path between two vertices. Developed using React.js framework. You can see it [here](https://filterasync.github.io/react-shortest-path).
 
-You can see it [here](https://filterasync.github.io/react-shortest-path).
+The source code can be freely modified, copied, and distributed, so long as you leave credits to the authors.
 
 ## Usage
 
