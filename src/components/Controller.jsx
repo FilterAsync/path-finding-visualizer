@@ -8,6 +8,7 @@ export function Controller(
 	return (props) => (
 		<form onSubmit={onSubmit} {...props}>
 			<InputField
+				aria-label="Matrix"
 				name="matrix"
 				label="Matrix:"
 				textarea={true}
@@ -22,6 +23,7 @@ export function Controller(
 				</p>
 			</InputField>
 			<InputField
+				aria-label="Source"
 				name="source"
 				label="Source:"
 				type="text"
@@ -31,6 +33,7 @@ export function Controller(
 			<div>
 				<label htmlFor="destination">Destination:</label>
 				<input
+					aria-label="Destination"
 					type="text"
 					name="destination"
 					defaultValue={arrToCoordStr(dest)}
