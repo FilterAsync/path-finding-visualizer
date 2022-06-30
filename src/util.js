@@ -99,7 +99,7 @@ export function arrToCoordStr(arr) {
 // uuid
 
 function FillRandomBytes(buffer, size) {
-	for (var i = 0; i < size; ++i) {
+	for (let i = 0; i < size; ++i) {
 		buffer[i] = (Math.random() * 0xff) | 0;
 	}
 	return buffer;
