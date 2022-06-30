@@ -43,7 +43,7 @@ export function Controller({
 				onChange={onDestChanged}
 			/>
 			<p>
-				Coordinates must be in the form (<i>x</i>, <i>y</i>).
+				<b>Note:</b> Coordinates must be of the form (<i>x</i>, <i>y</i>).
 			</p>
 			<p hidden={!error} className="error-message">
 				{error}
