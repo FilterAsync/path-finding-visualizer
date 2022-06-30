@@ -87,7 +87,7 @@ function App() {
 				</div>
 				<div>
 					<h2>Matrix Controller</h2>
-					{<Controller {...{ error, onSubmit, onMatrixChanged, onSourceChanged, onDestChanged }} />}
+					<Controller {...{ error, onSubmit, onMatrixChanged, onSourceChanged, onDestChanged }} />
 				</div>
 			</div>
 			<hr />
