@@ -1,5 +1,9 @@
-html {
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400&display=swap');
+
+html,
+body {
+	font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	margin: 0;
 }
 
 .flex-container {
@@ -9,18 +13,23 @@ html {
 
 .matrix {
 	font-family: 'Times New Roman', Times, serif;
+	overflow: auto;
+	max-width: 100vw;
+	max-height: 75vh;
 }
 
 @media (min-width: 1001px) {
 	.matrix {
 		max-width: 50vw;
-		max-height: 75vh;
-		overflow: auto;
 	}
 }
 
 .flex-container > * {
-	margin-right: 3rem;
+	margin-right: 2rem;
+}
+
+.flex-container > *:last-child {
+	margin-right: 0;
 }
 
 * {
@@ -33,12 +42,24 @@ html {
 
 .matrix-col {
 	padding: 16px;
+	width: 54.2px;
 	text-align: center;
+	flex-shrink: 0;
+}
+
+.matrix-col > .col-content {
+	text-align: center;
+	margin: auto;
 }
 
 .obstacle {
 	color: white;
 	background-color: black !important;
+}
+
+.obstacle.source,
+.obstacle.destination {
+	background-color: purple !important;
 }
 
 .path {
@@ -73,7 +94,7 @@ h3,
 h4,
 h5,
 h6 {
-	line-height: 25px;
+	line-height: 24px;
 }
 
 p {
@@ -89,36 +110,25 @@ textarea#matrix {
 	max-height: 240px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
 	.flex-container {
 		flex-wrap: wrap-reverse;
+		min-height: fit-content;
+	}
+	.flex-container > * {
+		margin-right: 0;
 	}
 }
 
-@media (max-width: 552px) {
-	.matrix-col {
-		padding: 8px;
-	}
-}
-
-@media (max-width: 376px) {
-	.matrix-col {
-		padding: 4px;
+@media (max-width: 400px) {
+	textarea#matrix {
+		max-width: 300px;
 	}
 }
 
 @media (max-width: 300px) {
-	.matrix-col {
-		padding: 2px;
-	}
 	textarea#matrix {
-		width: 200px;
-	}
-}
-
-@media (max-width: 255px) {
-	.matrix-col {
-		padding: 0px;
+		max-width: 200px;
 	}
 }
 
@@ -128,10 +138,23 @@ label {
 
 button,
 input[type='reset'] {
-	border: 2px solid grey;
+	color: hsla(0, 0%, 0%, 0.8);
+	border: 2px solid #cccccc;
+	border-radius: 8px;
 	text-align: center;
 	cursor: pointer;
 	padding: 6px;
+	font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button:disabled,
+button[disabled] {
+	cursor: not-allowed;
+	color: rgb(199, 200, 201);
+}
+
+button:disabled:hover {
+	background-color: initial;
 }
 
 button:hover,
