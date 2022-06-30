@@ -19,8 +19,10 @@ function Matrix(props) {
 									id={col === 1 ? `${i1},${i2}` : undefined}
 									className={'matrix-col ' + role + ' ' + (isSource || isDes)}
 								>
-									{i1}
-									<sub>{i2}</sub>
+									<div className="col-content">
+										{i1}
+										<sub>{i2}</sub>
+									</div>
 								</span>
 							);
 						})}
