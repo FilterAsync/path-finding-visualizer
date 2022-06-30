@@ -28,7 +28,7 @@ export function strToCoord(str) {
 		case x < 0 || y < 0 || Number.isNaN(x) || Number.isNaN(y):
 		case !(Number.isInteger(x) && Number.isInteger(y)):
 		case _x.includes('.') || _y.includes('.'):
-		case (x === 0 && _x !== '0') || (y === 0 && _y !== '0'):
+		case _x !== x.toString() || _y !== y.toString(): // exclude 1f, 0b0, 2z, etc
 			return false;
 		default:
 			break;
