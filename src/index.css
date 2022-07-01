@@ -110,7 +110,7 @@ textarea#matrix {
 	max-height: 240px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 929px) {
 	.flex-container {
 		flex-wrap: wrap-reverse;
 		min-height: fit-content;
