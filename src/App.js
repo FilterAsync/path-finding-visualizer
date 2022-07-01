@@ -83,7 +83,7 @@ function App() {
 			<div className="flex-container center">
 				<div>
 					<h2>Matrix Representation</h2>
-					<Matrix />
+					<Matrix error={!!error} />
 				</div>
 				<div>
 					<h2>Matrix Controller</h2>
