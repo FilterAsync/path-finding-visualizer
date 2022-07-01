@@ -3,7 +3,7 @@ import MatrixContext from '../MatrixContext';
 import { matrixToStr, arrToCoordStr } from '../util';
 import InputField from './InputField';
 
-export function Controller({
+function Controller({
 	error,
 	onSubmit,
 	onMatrixChanged,
