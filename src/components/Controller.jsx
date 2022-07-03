@@ -9,6 +9,7 @@ function Controller({
 	onMatrixChanged,
 	onSourceChanged,
 	onDestChanged,
+	onSpeedChanged,
 	...props
 }) {
 	const { matrix, source, dest } = useContext(MatrixContext);
@@ -43,8 +44,16 @@ function Controller({
 				onChange={onDestChanged}
 			/>
 			<p>
-				<b>Note:</b> Coordinates must be of the form (<i>x</i>, <i>y</i>).
+				<b>Note:</b> Coordinates must be of the form (<i>x</i>,<i>y</i>).
 			</p>
+			<InputField
+				name="speed"
+				label="Speed (ms):"
+				type="number"
+				min={0}
+				defaultValue={10}
+				onChange={onSpeedChanged}
+			/>
 			<p hidden={!error} className="error-message">
 				{error}
 			</p>
