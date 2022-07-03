@@ -106,29 +106,19 @@ textarea#matrix {
 	display: block;
 	width: 300px;
 	height: 120px;
-	max-width: 400px;
-	max-height: 240px;
+	max-height: calc(100vh / 3);
+	max-width: clamp(300px, 1vw, 400px);
 }
 
 @media (max-width: 929px) {
 	.flex-container {
 		flex-wrap: wrap-reverse;
-		min-height: fit-content;
 	}
+}
+
+@media (max-width: 768px) {
 	.flex-container > * {
 		margin-right: 0;
-	}
-}
-
-@media (max-width: 400px) {
-	textarea#matrix {
-		max-width: 300px;
-	}
-}
-
-@media (max-width: 300px) {
-	textarea#matrix {
-		max-width: 200px;
 	}
 }
 
@@ -176,7 +166,7 @@ label {
 	display: inline-block;
 }
 
-input[type='text'],
+input,
 textarea {
 	font-family: 'Hack', 'Consolas', 'Courier New', Courier, monospace;
 	padding: 8px;
@@ -190,5 +180,5 @@ hr {
 }
 
 div.input-field {
-	margin: 4px 0 4px 0;
+	margin: 8px 0;
 }
