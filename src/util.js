@@ -2,7 +2,7 @@ export function removeAllSpaces(str) {
 	if (typeof str !== 'string') {
 		return '';
 	}
-	return str.replace(/\s/g, '');
+	return str.trim();
 }
 
 export function getRandomEntry(arr) {
@@ -137,3 +137,5 @@ export function CreateUUID() {
 
 	return result;
 }
+
+export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
