@@ -5,6 +5,7 @@ import Matrix from './components/Matrix';
 import Controller from './components/Controller';
 import matrices from './matrices.json';
 import MatrixContext from './MatrixContext';
+import { wait } from './util';
 
 const randomMatrix = getRandomEntry(matrices);
 
@@ -15,7 +16,13 @@ function App() {
 
 	const [error, setError] = useState('');
 
-	const onSubmit = (event) => {
+	const [speed, setSpeed] = useState(10);
+
+	const onSpeedChanged = (event) => {
+		setSpeed(+event.target.value);
+	};
+
+	const onSubmit = async (event) => {
 		event.preventDefault();
 		const [row1, col1] = source;
 		const [row2, col2] = dest;
@@ -30,8 +37,10 @@ function App() {
 			setError('Invalid source or destination.');
 			return;
 		}
+		shortestPath.reverse();
 		for (const [row, col] of shortestPath) {
 			const entry = document.getElementById(`${row},${col}`);
+			await wait(speed);
 			entry.style.backgroundColor = '#ebc634';
 		}
 		setError('');
@@ -72,6 +81,14 @@ function App() {
 		setDest(coord);
 	};
 
+	const events = {
+		onSubmit,
+		onMatrixChanged,
+		onSourceChanged,
+		onDestChanged,
+		onSpeedChanged,
+	};
+
 	return (
 		<MatrixContext.Provider
 			value={{
@@ -87,7 +104,7 @@ function App() {
 				</div>
 				<div>
 					<h2>Matrix Controller</h2>
-					<Controller {...{ error, onSubmit, onMatrixChanged, onSourceChanged, onDestChanged }} />
+					<Controller {...{ error, ...events }} />
 				</div>
 			</div>
 			<hr />
