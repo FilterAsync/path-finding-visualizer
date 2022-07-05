@@ -3,7 +3,6 @@
 html,
 body {
 	font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	margin: 0;
 }
 
 .flex-container {
@@ -15,7 +14,8 @@ body {
 	font-family: 'Times New Roman', Times, serif;
 	overflow: auto;
 	max-width: 100vw;
-	max-height: 75vh;
+	max-height: 80vh;
+	margin: 32px;
 }
 
 @media (min-width: 1001px) {
@@ -54,7 +54,7 @@ body {
 
 .obstacle {
 	color: white;
-	background-color: black !important;
+	background-color: black;
 }
 
 .obstacle.source,
@@ -69,14 +69,14 @@ body {
 
 .source {
 	background-color: red !important;
-	color: white !important;
+	color: white;
 }
 
 .center {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 100vh;
+	text-align: center;
 }
 
 .destination {
@@ -85,7 +85,7 @@ body {
 }
 
 .error-message {
-	color: red !important;
+	color: red;
 }
 
 h1,
@@ -103,10 +103,9 @@ p {
 }
 
 textarea#matrix {
-	display: block;
 	width: 300px;
 	height: 120px;
-	max-height: calc(100vh / 3);
+	max-height: clamp(200px, 1vh, 300px);
 	max-width: clamp(300px, 1vw, 400px);
 }
 
@@ -155,6 +154,8 @@ input[type='reset']:hover {
 .button-list-row {
 	display: flex;
 	flex-flow: row wrap;
+	align-items: center;
+	justify-content: center;
 }
 
 .button-list-row > button,
@@ -162,23 +163,39 @@ input[type='reset'] {
 	margin-right: 1rem;
 }
 
-label {
-	display: inline-block;
-}
-
 input,
-textarea {
+textarea,
+select {
 	font-family: 'Hack', 'Consolas', 'Courier New', Courier, monospace;
-	padding: 8px;
+	padding: 6px;
 	border: 1px solid #cccccc;
 	border-radius: 4px;
 }
 
-hr {
-	border-top: 1px solid rgb(200, 201, 199);
-	opacity: 0.85;
-}
-
 div.input-field {
 	margin: 8px 0;
+}
+
+form {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-around;
+	background-color: #e3e3e3;
+	border-radius: 8px;
+	margin-bottom: 20px;
+}
+
+form > div {
+	flex-basis: 0;
+	flex-shrink: 0;
+}
+
+form input {
+	vertical-align: middle;
+	width: clamp(150px, 4vw, 450px);
+}
+
+form * {
+	text-align: center;
 }
