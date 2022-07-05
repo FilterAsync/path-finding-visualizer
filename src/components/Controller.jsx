@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import MatrixContext from '../MatrixContext';
 import { matrixToStr, arrToCoordStr } from '../util';
-import InputField from './InputField';
+import { InputField, DropdownField } from './InputField';
+import { algorithms } from '../algs';
 
 function Controller({
 	error,
@@ -10,56 +11,54 @@ function Controller({
 	onSourceChanged,
 	onDestChanged,
 	onSpeedChanged,
+	onAlgorithmChanged,
 	...props
 }) {
 	const { matrix, source, dest } = useContext(MatrixContext);
 	return (
 		<form onSubmit={onSubmit} {...props}>
 			<InputField
-				name="matrix"
+				id="matrix"
 				label="Matrix:"
 				textarea={true}
 				defaultValue={matrixToStr(matrix)}
 				onChange={onMatrixChanged}
-			>
-				<p>
-					Put <code>0</code> for obstacle, and <code>1</code> for path.
-				</p>
-				<p>
-					<b>Note:</b> Path movements are up, down, left, right.
-				</p>
-			</InputField>
+			/>
 			<InputField
-				name="source"
+				id="source"
 				label="Source:"
 				type="text"
 				defaultValue={arrToCoordStr(source)}
 				onChange={onSourceChanged}
 			/>
 			<InputField
-				name="destination"
+				id="destination"
 				label="Destination:"
 				type="text"
 				defaultValue={arrToCoordStr(dest)}
 				onChange={onDestChanged}
 			/>
-			<p>
-				<b>Note:</b> Coordinates must be of the form (<i>x</i>,<i>y</i>).
-			</p>
 			<InputField
-				name="speed"
+				id="speed"
 				label="Speed (ms):"
 				type="number"
 				min={0}
 				defaultValue={10}
 				onChange={onSpeedChanged}
 			/>
+			<DropdownField id="algorithm" label="Algorithm:" onChange={onAlgorithmChanged}>
+				{algorithms.map((algo) => (
+					<option value={algo} key={algo}>
+						{algo}
+					</option>
+				))}
+			</DropdownField>
 			<p hidden={!error} className="error-message">
 				{error}
 			</p>
 			<div className="button-list-row">
 				<button type="submit" disabled={!!error}>
-					Perform BFS
+					Perform
 				</button>
 			</div>
 		</form>
