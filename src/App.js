@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { removeAllSpaces, strToCoord, isValidMatrixStr, getRandomEntry } from './util';
 import { BFS, DFS, algorithms } from './algs';
 import Matrix from './components/Matrix';
@@ -21,6 +21,11 @@ const errors = {
 	invalidCoords: 'Invalid coordinates.',
 };
 
+// this is a bug on the `onSubmit` event
+// where the previous path is still processing
+// even after the state has been updated
+let update = false;
+
 function App() {
 	const [matrix, setMatrix] = useState(randomMatrix.matrix);
 	const [source, setSource] = useState(randomMatrix.source);
@@ -31,19 +36,21 @@ function App() {
 	const [speed, setSpeed] = useState(10);
 
 	const [algorithm, setAlgorithm] = useState(algorithms[0]);
-	const [, reload] = useState(false);
 
-	const onSpeedChanged = (event) => {
-		setSpeed(+event.target.value);
-	};
-
-	const onAlgorithmChanged = (event) => {
-		setAlgorithm(event.target.value);
-		reload((value) => !value);
-	};
+	useEffect(() => {
+		// when one of the inputs changes, we need to update the state
+		update = true;
+	}, [matrix, source, dest, error, speed, algorithm]);
 
 	const onSubmit = async (event) => {
+		console.log(update);
 		event.preventDefault();
+		// it's already being processed, don't bother trying to reprocess
+		if (!update) {
+			return;
+		}
+		// update the state the next time around to prevent it from being processed again
+		update = false;
 		const [row1, col1] = source;
 		const [row2, col2] = dest;
 		let _matrix;
@@ -52,6 +59,7 @@ function App() {
 		} else {
 			_matrix = Object.assign([], matrix);
 		}
+
 		const pathFinder = algorithmMap[algorithm];
 		const path = pathFinder(_matrix, row1, col1, row2, col2);
 		if (path === -1) {
@@ -63,6 +71,10 @@ function App() {
 			path.reverse();
 		}
 		for (const [row, col] of path) {
+			// if it's up-to-date, then we're done with the current running path
+			if (update) {
+				break;
+			}
 			const entry = document.getElementById(`${row},${col}`);
 			if (speed > 0) {
 				await wait(speed);
@@ -111,6 +123,14 @@ function App() {
 		if (coord) {
 			setDest(coord);
 		}
+	};
+
+	const onSpeedChanged = (event) => {
+		setSpeed(+event.target.value);
+	};
+
+	const onAlgorithmChanged = (event) => {
+		setAlgorithm(event.target.value);
 	};
 
 	const events = {
