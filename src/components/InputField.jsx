@@ -1,11 +1,25 @@
-function InputField({ label, textarea, name, children, ...props }) {
+export function InputField({ label, textarea, id, children, ...props }) {
+	let input = <input id={id} {...props} />;
+	if (textarea) {
+		input = <textarea id={id} {...props} />;
+	}
+
 	return (
 		<div className="input-field">
-			<label htmlFor={name}>{label}</label>
-			{textarea ? <textarea id={name} {...props} /> : <input id={name} {...props} />}
+			<label htmlFor={id}>{label}</label>
+			{input}
 			{children}
 		</div>
 	);
 }
 
-export default InputField;
+export function DropdownField({ label, id, children, ...props }) {
+	return (
+		<div className="input-field">
+			<label htmlFor={id}>{label}</label>
+			<select id={id} {...props}>
+				{children}
+			</select>
+		</div>
+	);
+}
