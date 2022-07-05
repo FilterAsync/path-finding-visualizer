@@ -139,3 +139,20 @@ export function CreateUUID() {
 }
 
 export const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Memoize result of the function invocation in the cache object for
+// later retrieval in subsequent function invocations with the same arguments.
+// This is useful for doing expensive calculations multiple times.
+export function memo(f) {
+	const cache = new Map();
+	const wrapper = function (...args) {
+		const key = args.toString();
+		if (cache.has(key)) {
+			return cache.get(key);
+		}
+		const result = f.apply(this, args);
+		cache.set(key, result);
+		return result;
+	};
+	return wrapper;
+}
