@@ -12,11 +12,12 @@ function Controller({
 	onDestChanged,
 	onSpeedChanged,
 	onAlgorithmChanged,
+	onReload,
 	...props
 }) {
 	const { matrix, source, dest } = useContext(MatrixContext);
 	return (
-		<form onSubmit={onSubmit} {...props}>
+		<form className="matrix-controller" onSubmit={onSubmit} {...props}>
 			<InputField
 				id="matrix"
 				label="Matrix:"
@@ -59,6 +60,9 @@ function Controller({
 			<div className="button-list-row">
 				<button type="submit" disabled={!!error}>
 					Perform
+				</button>
+				<button type="button" onClick={onReload}>
+					Clear
 				</button>
 			</div>
 		</form>
