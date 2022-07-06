@@ -105,8 +105,8 @@ p {
 textarea#matrix {
 	width: 300px;
 	height: 120px;
-	max-height: clamp(200px, 1vh, 300px);
-	max-width: clamp(300px, 1vw, 400px);
+	max-height: calc(160px + 5vh);
+	max-width: calc(200px + 5vw);
 }
 
 @media (max-width: 929px) {
@@ -153,14 +153,15 @@ input[type='reset']:hover {
 
 .button-list-row {
 	display: flex;
-	flex-flow: row wrap;
-	align-items: center;
-	justify-content: center;
+	margin: 8px;
 }
 
-.button-list-row > button,
-input[type='reset'] {
+.button-list-row > button {
 	margin-right: 1rem;
+}
+
+.button-list-row > button:last-child {
+	margin-right: 0;
 }
 
 input,
@@ -176,7 +177,7 @@ div.input-field {
 	margin: 8px 0;
 }
 
-form {
+form.matrix-controller {
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
@@ -186,16 +187,19 @@ form {
 	margin-bottom: 20px;
 }
 
-form > div {
+form.matrix-controller > div {
 	flex-basis: 0;
 	flex-shrink: 0;
 }
 
-form input {
+form.matrix-controller input,
+form.matrix-controller textarea,
+form.matrix-controller select {
 	vertical-align: middle;
-	width: clamp(150px, 4vw, 450px);
+	width: calc(120px + 5vw);
+	margin: 0 4px;
 }
 
-form * {
+form.matrix-controller * {
 	text-align: center;
 }
