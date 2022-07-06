@@ -7,7 +7,7 @@ function neighbors(M, row, col) {
 	];
 	const arr = [];
 	for (const [row, col] of neighbors) {
-		if (validate(M, row, col) && M[row][col] === 1) {
+		if (validate(M, row, col)) {
 			arr.push([row, col]);
 		}
 	}
@@ -15,7 +15,7 @@ function neighbors(M, row, col) {
 }
 
 function validate(M, row, col) {
-	return 0 <= row && row < M.length && 0 <= col && col < M[0].length;
+	return 0 <= row && row < M.length && 0 <= col && col < M[0].length && M[row][col];
 }
 
 function pathify(pre, s, v, res) {
