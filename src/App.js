@@ -37,13 +37,14 @@ function App() {
 
 	const [algorithm, setAlgorithm] = useState(algorithms[0]);
 
+	const [reload, setReload] = useState(false);
+
 	useEffect(() => {
 		// when one of the inputs changes, we need to update the state
 		update = true;
-	}, [matrix, source, dest, error, speed, algorithm]);
+	}, [matrix, source, dest, error, speed, algorithm, reload]);
 
 	const onSubmit = async (event) => {
-		console.log(update);
 		event.preventDefault();
 		// it's already being processed, don't bother trying to reprocess
 		if (!update) {
@@ -105,7 +106,7 @@ function App() {
 			setError(errors.invalidCoords);
 			return;
 		}
-		if (error === errors.invalidCoords) {
+		if (error === errors.invalidCoords || error === errors.invalidSrcOrDest) {
 			setError('');
 		}
 		return coord;
@@ -133,6 +134,8 @@ function App() {
 		setAlgorithm(event.target.value);
 	};
 
+	const onReload = () => setReload((value) => !value);
+
 	const events = {
 		onSubmit,
 		onMatrixChanged,
@@ -140,6 +143,7 @@ function App() {
 		onDestChanged,
 		onSpeedChanged,
 		onAlgorithmChanged,
+		onReload,
 	};
 
 	return (
