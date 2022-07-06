@@ -1,5 +1,5 @@
 {
-	"name": "shortest-path",
+	"name": "path-finding-visualization",
 	"version": "0.1.0",
 	"homepage": "https://filterasync.github.io/react-shortest-path",
 	"private": true,
