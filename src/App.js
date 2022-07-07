@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { removeAllSpaces, strToCoord, isValidMatrixStr, getRandomEntry } from './util';
 import { BFS, DFS, algorithms } from './algs';
 import Matrix from './components/Matrix';
@@ -11,6 +11,7 @@ const randomMatrix = getRandomEntry(matrices);
 
 // TODO add more algorithms
 const algorithmMap = {
+	// idempotency
 	'Breadth-first': memo(BFS),
 	'Depth-first': memo(DFS),
 };
@@ -26,23 +27,28 @@ const errors = {
 // even after the state has been updated
 let update = false;
 
+const reducer = function (state, action) {
+	return {
+		...state,
+		[action.type]: action.data,
+	};
+};
+
 function App() {
-	const [matrix, setMatrix] = useState(randomMatrix.matrix);
-	const [source, setSource] = useState(randomMatrix.source);
-	const [dest, setDest] = useState(randomMatrix.dest);
+	const [states, dispatch] = useReducer(reducer, {
+		...randomMatrix,
+		error: '',
+		speed: 10,
+		algorithm: algorithms[0],
+		reload: false,
+	});
 
-	const [error, setError] = useState('');
+	const { matrix, source, dest, error, speed, algorithm, reload } = states;
 
-	const [speed, setSpeed] = useState(10);
-
-	const [algorithm, setAlgorithm] = useState(algorithms[0]);
-
-	const [reload, setReload] = useState(false);
-
+	// when one of the inputs changes, we need to update the state
 	useEffect(() => {
-		// when one of the inputs changes, we need to update the state
 		update = true;
-	}, [matrix, source, dest, error, speed, algorithm, reload]);
+	}, [matrix, source, dest, error, speed, algorithm, reload]); // dependency list must be an array literal
 
 	const onSubmit = async (event) => {
 		event.preventDefault();
@@ -52,6 +58,9 @@ function App() {
 		}
 		// update the state the next time around to prevent it from being processed again
 		update = false;
+
+		const { source, dest, matrix, algorithm, speed } = states;
+
 		const [row1, col1] = source;
 		const [row2, col2] = dest;
 		let _matrix;
@@ -64,7 +73,10 @@ function App() {
 		const pathFinder = algorithmMap[algorithm];
 		const path = pathFinder(_matrix, row1, col1, row2, col2);
 		if (path === -1) {
-			setError(errors.invalidSrcOrDest);
+			dispatch({
+				type: 'error',
+				data: errors.invalidSrcOrDest,
+			});
 			return;
 		}
 		// a bug where the path starts with the destination and ends with the source
@@ -88,14 +100,24 @@ function App() {
 		const str = removeAllSpaces(event.target.value);
 		const validate = isValidMatrixStr(str);
 		if (!validate) {
-			setError(errors.invalidMatrix);
+			dispatch({
+				type: 'error',
+				data: errors.invalidMatrix,
+			});
 			return;
 		}
+		const { error } = states;
 		if (error === errors.invalidMatrix) {
-			setError('');
+			dispatch({
+				type: 'error',
+				data: '',
+			});
 		}
 		try {
-			setMatrix(JSON.parse(str));
+			dispatch({
+				type: 'matrix',
+				data: JSON.parse(str),
+			});
 		} catch (err) {}
 	};
 
@@ -103,11 +125,18 @@ function App() {
 		const str = removeAllSpaces(value);
 		const coord = strToCoord(str);
 		if (!coord) {
-			setError(errors.invalidCoords);
+			dispatch({
+				type: 'error',
+				data: errors.invalidCoords,
+			});
 			return;
 		}
+		const { error } = states;
 		if (error === errors.invalidCoords || error === errors.invalidSrcOrDest) {
-			setError('');
+			dispatch({
+				type: 'error',
+				data: '',
+			});
 		}
 		return coord;
 	};
@@ -115,26 +144,38 @@ function App() {
 	const onSourceChanged = (event) => {
 		const coord = changeCoords(event.target.value);
 		if (coord) {
-			setSource(coord);
+			dispatch({
+				type: 'source',
+				data: coord,
+			});
 		}
 	};
 
 	const onDestChanged = (event) => {
 		const coord = changeCoords(event.target.value);
 		if (coord) {
-			setDest(coord);
+			dispatch({
+				type: 'dest',
+				data: coord,
+			});
 		}
 	};
 
 	const onSpeedChanged = (event) => {
-		setSpeed(+event.target.value);
+		dispatch({
+			type: 'speed',
+			data: +event.target.value,
+		});
 	};
 
 	const onAlgorithmChanged = (event) => {
-		setAlgorithm(event.target.value);
+		dispatch({
+			type: 'algorithm',
+			data: event.target.value,
+		});
 	};
 
-	const onReload = () => setReload((value) => !value);
+	const onReload = () => dispatch({ type: 'reload', data: !reload });
 
 	const events = {
 		onSubmit,
