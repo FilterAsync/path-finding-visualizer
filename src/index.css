@@ -10,22 +10,16 @@ body {
 	flex-wrap: nowrap;
 }
 
-.matrix {
+#matrix {
 	font-family: 'Times New Roman', Times, serif;
 	overflow: auto;
 	max-width: 100vw;
-	max-height: 80vh;
+	max-height: 100vh;
 	margin: 32px;
 }
 
-@media (min-width: 1001px) {
-	.matrix {
-		max-width: 50vw;
-	}
-}
-
 .flex-container > * {
-	margin-right: 2rem;
+	margin-right: 32px;
 }
 
 .flex-container > *:last-child {
@@ -42,14 +36,12 @@ body {
 
 .matrix-col {
 	padding: 16px;
-	width: 54.2px;
+	width: 28px;
+	line-height: 28px;
+	height: 28px;
+	box-sizing: content-box;
 	text-align: center;
 	flex-shrink: 0;
-}
-
-.matrix-col > .col-content {
-	text-align: center;
-	margin: auto;
 }
 
 .obstacle {
@@ -102,7 +94,7 @@ p {
 	margin-bottom: 8px;
 }
 
-textarea#matrix {
+textarea#matrix-input {
 	width: 300px;
 	height: 120px;
 	max-height: calc(160px + 5vh);
@@ -157,7 +149,7 @@ input[type='reset']:hover {
 }
 
 .button-list-row > button {
-	margin-right: 1rem;
+	margin-right: 16px;
 }
 
 .button-list-row > button:last-child {
