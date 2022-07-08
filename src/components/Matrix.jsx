@@ -8,7 +8,7 @@ const Matrix = React.memo(
 	({ error, ...props }) => {
 		const { matrix, source, dest } = useContext(MatrixContext);
 		return (
-			<div className="matrix" {...props}>
+			<div id="matrix" {...props}>
 				{matrix.map((row, i1) => (
 					<MatrixRow key={'row-' + i1}>
 						{row.map((col, i2) => (
