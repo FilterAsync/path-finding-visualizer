@@ -13,16 +13,10 @@ function MatrixCol({ value, row, col, source, dest, children, ...props }) {
 	}
 
 	return (
-		<span
-			className={'matrix-col ' + role}
-			id={value === 1 ? `${row},${col}` : undefined}
-			{...props}
-		>
-			<div className="col-content">
-				{row}
-				<sub>{col}</sub>
-			</div>
-		</span>
+		<div className={'matrix-col ' + role} id={value === 1 ? `${row},${col}` : undefined} {...props}>
+			{row}
+			<sub>{col}</sub>
+		</div>
 	);
 }
 
