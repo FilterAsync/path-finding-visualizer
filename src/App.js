@@ -5,15 +5,15 @@ import Matrix from './components/Matrix';
 import Controller from './components/Controller';
 import matrices from './matrices.json';
 import MatrixContext from './MatrixContext';
-import { wait, memo } from './util';
+import { wait } from './util';
 
 const randomMatrix = getRandomEntry(matrices);
 
 // TODO add more algorithms
 const algorithmMap = {
 	// idempotency
-	'Breadth-first': memo(BFS),
-	'Depth-first': memo(DFS),
+	'Breadth-first': BFS,
+	'Depth-first': DFS,
 };
 
 const errors = {
@@ -34,6 +34,19 @@ const reducer = function (state, action) {
 	};
 };
 
+// we export this here because it varies depending upon the value of update and speed
+export async function paint([row, col]) {
+	if (update) {
+		return;
+	}
+	const block = document.getElementById(`${row},${col}`);
+	await wait(paintSpeed);
+	block.style.backgroundColor = '#e9ed68';
+	return true;
+}
+
+let paintSpeed = 10;
+
 function App() {
 	const [states, dispatch] = useReducer(reducer, {
 		...randomMatrix,
@@ -48,6 +61,7 @@ function App() {
 	// when one of the inputs changes, we need to update the state
 	useEffect(() => {
 		update = true;
+		paintSpeed = speed;
 	}, [matrix, source, dest, error, speed, algorithm, reload]); // dependency list must be an array literal
 
 	const onSubmit = async (event) => {
@@ -70,8 +84,11 @@ function App() {
 			_matrix = Object.assign([], matrix);
 		}
 
+		document.getElementById('matrix').scrollIntoView();
+
 		const pathFinder = algorithmMap[algorithm];
-		const path = pathFinder(_matrix, row1, col1, row2, col2);
+		const path = await pathFinder(_matrix, row1, col1, row2, col2);
+
 		if (path === -1) {
 			dispatch({
 				type: 'error',
