@@ -19,7 +19,7 @@ function Controller({
 	return (
 		<form className="matrix-controller" onSubmit={onSubmit} {...props}>
 			<InputField
-				id="matrix"
+				id="matrix-input"
 				label="Matrix:"
 				textarea={true}
 				defaultValue={matrixToStr(matrix)}
