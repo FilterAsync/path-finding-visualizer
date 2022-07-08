@@ -1,3 +1,5 @@
+import { paint } from './App';
+
 function neighbors(M, row, col) {
 	const neighbors = [
 		[row - 1, col],
@@ -30,7 +32,7 @@ function pathify(pre, s, v, res) {
 	return res.reverse();
 }
 
-export function BFS(M, row1, col1, row2, col2) {
+export async function BFS(M, row1, col1, row2, col2) {
 	if (!validate(M, row1, col1) || !validate(M, row2, col2)) {
 		return -1;
 	}
@@ -51,6 +53,7 @@ export function BFS(M, row1, col1, row2, col2) {
 		seen.add(u);
 		for (const v of neighbors(M, row, col)) {
 			const [row, col] = v;
+			await paint(v);
 			if (!seen.has(v)) {
 				M[row][col] = 0;
 				pre[v] = u;
@@ -62,12 +65,15 @@ export function BFS(M, row1, col1, row2, col2) {
 }
 
 export function DFS(M, row1, col1, row2, col2) {
+	if (!validate(M, row1, col1) || !validate(M, row2, col2)) {
+		return -1;
+	}
 	const seen = new Set(),
 		pre = {};
 	const src = [row1, col1],
 		des = [row2, col2];
 	pre[src] = null;
-	function _DFS(u) {
+	const _DFS = async function (u) {
 		const [row, col] = u;
 		if (row === row2 && col === col2) {
 			return pathify(pre, src, des, []);
@@ -75,16 +81,17 @@ export function DFS(M, row1, col1, row2, col2) {
 		for (const w of neighbors(M, row, col)) {
 			if (!seen.has(w)) {
 				seen.add(w);
+				await paint(w);
 				M[row][col] = 0;
 				pre[w] = u;
-				let res = _DFS(w);
+				const res = await _DFS(w);
 				if (res !== -1) {
 					return res;
 				}
 			}
 		}
 		return -1;
-	}
+	};
 	return _DFS(src);
 }
 
