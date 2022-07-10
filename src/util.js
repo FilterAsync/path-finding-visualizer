@@ -1,10 +1,3 @@
-export function removeAllSpaces(str) {
-	if (typeof str !== 'string') {
-		return '';
-	}
-	return str.trim();
-}
-
 export function getRandomEntry(arr) {
 	return arr[0 | (Math.random() * arr.length)];
 }
@@ -43,21 +36,24 @@ export function isValidMatrixStr(str) {
 	if (str[0] !== '[' || str[str.length - 1] !== ']') {
 		return false;
 	}
-	let _str = str.substring(1);
-	while (_str) {
-		const openBracketIdx = _str.indexOf('[');
+	str = str.substring(1);
+	while (str) {
+		const openBracketIdx = str.indexOf('[');
+		if (str.substring(0, openBracketIdx)) {
+			return false;
+		}
 		if (openBracketIdx === -1) {
 			return false;
 		}
-		const closeBracketIdx = _str.indexOf(']');
+		const closeBracketIdx = str.indexOf(']');
 		let charStartIdx = openBracketIdx;
 		for (let i = openBracketIdx + 1; i <= closeBracketIdx - 1; i++) {
-			const char = _str[i];
+			const char = str[i];
 			switch (true) {
-				case i - charStartIdx !== 1 && char !== ',':
+				case char !== ',' && 0 <= +char && +char <= 9:
+					break;
 				case i - charStartIdx === 1 && char === ',':
 				case Number.isNaN(+char) && char !== ',':
-				case char !== ',' && +char !== 0 && +char !== 1:
 					return false;
 				case char === ',':
 					charStartIdx = i;
@@ -66,13 +62,16 @@ export function isValidMatrixStr(str) {
 					break;
 			}
 		}
-		if (_str[closeBracketIdx + 1] === ']' && closeBracketIdx + 2 === _str.length) {
+		if (
+			str[closeBracketIdx + 1] === ']' &&
+			closeBracketIdx + 2 === str.length
+		) {
 			break;
 		}
-		if (_str[closeBracketIdx + 1] !== ',') {
+		if (str[closeBracketIdx + 1] !== ',') {
 			return false;
 		}
-		_str = _str.substring(closeBracketIdx + 2);
+		str = str.substring(closeBracketIdx + 2);
 	}
 	return true;
 }
