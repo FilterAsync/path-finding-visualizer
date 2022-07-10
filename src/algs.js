@@ -1,12 +1,20 @@
-import { paint } from './App';
+import { paint, allowDiagonalMovements } from './App';
 
 function neighbors(M, row, col) {
-	const neighbors = [
+	let neighbors = [
 		[row - 1, col],
 		[row + 1, col],
 		[row, col - 1],
 		[row, col + 1],
 	];
+	if (allowDiagonalMovements) {
+		neighbors = [
+			[row - 1, col - 1],
+			[row - 1, col + 1],
+			[row + 1, col + 1],
+			[row + 1, col - 1],
+		].concat(neighbors);
+	}
 	const arr = [];
 	for (const [row, col] of neighbors) {
 		if (validate(M, row, col)) {
@@ -17,7 +25,9 @@ function neighbors(M, row, col) {
 }
 
 function validate(M, row, col) {
-	return 0 <= row && row < M.length && 0 <= col && col < M[0].length && M[row][col];
+	return (
+		0 <= row && row < M.length && 0 <= col && col < M[0].length && M[row][col]
+	);
 }
 
 function pathify(pre, s, v, res) {
