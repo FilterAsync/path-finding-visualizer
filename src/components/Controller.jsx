@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import MatrixContext from '../MatrixContext';
 import { matrixToStr, arrToCoordStr } from '../util';
-import { InputField, DropdownField } from './InputField';
+import { InputField, DropdownField, CheckboxField } from './InputField';
 import { algorithms } from '../algs';
+import FlexContainer from './FlexContainer';
+import ButtonListRow from './ButtonListRow';
 
 function Controller({
 	error,
@@ -13,6 +15,7 @@ function Controller({
 	onSpeedChanged,
 	onAlgorithmChanged,
 	onReload,
+	onAllowDiagonalMovements,
 	...props
 }) {
 	const { matrix, source, dest } = useContext(MatrixContext);
@@ -47,24 +50,35 @@ function Controller({
 				defaultValue={10}
 				onChange={onSpeedChanged}
 			/>
-			<DropdownField id="algorithm" label="Algorithm:" onChange={onAlgorithmChanged}>
+			<DropdownField
+				id="algorithm"
+				label="Algorithm:"
+				onChange={onAlgorithmChanged}
+			>
 				{algorithms.map((algo) => (
 					<option value={algo} key={algo}>
 						{algo}
 					</option>
 				))}
 			</DropdownField>
-			<p hidden={!error} className="error-message">
-				{error}
-			</p>
-			<div className="button-list-row">
-				<button type="submit" disabled={!!error}>
-					Perform
-				</button>
-				<button type="button" onClick={onReload}>
-					Clear
-				</button>
-			</div>
+			<FlexContainer id="form-flex-container">
+				<CheckboxField
+					id="allow-diagonal-movements"
+					label="Diagonal Movements:"
+					onChange={onAllowDiagonalMovements}
+				/>
+				<p hidden={!error} id="error-message">
+					{error}
+				</p>
+				<ButtonListRow>
+					<button type="submit" disabled={!!error}>
+						Perform
+					</button>
+					<button type="button" onClick={onReload}>
+						Clear
+					</button>
+				</ButtonListRow>
+			</FlexContainer>
 		</form>
 	);
 }
