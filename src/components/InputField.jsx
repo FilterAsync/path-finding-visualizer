@@ -23,3 +23,12 @@ export function DropdownField({ label, id, children, ...props }) {
 		</div>
 	);
 }
+
+export function CheckboxField({ label, id, children, ...props }) {
+	return (
+		<div className="input-field checkbox-field">
+			<label htmlFor={id}>{label}</label>
+			<input type="checkbox" id={id} {...props} />
+		</div>
+	);
+}
