@@ -1,5 +1,5 @@
-import { useEffect, useReducer } from 'react';
-import { removeAllSpaces, strToCoord, isValidMatrixStr, getRandomEntry } from './util';
+import { useEffect, useReducer, useRef } from 'react';
+import { strToCoord, isValidMatrixStr, getRandomEntry } from './util';
 import { BFS, DFS, algorithms } from './algs';
 import Matrix from './components/Matrix';
 import Controller from './components/Controller';
@@ -11,7 +11,6 @@ const randomMatrix = getRandomEntry(matrices);
 
 // TODO add more algorithms
 const algorithmMap = {
-	// idempotency
 	'Breadth-first': BFS,
 	'Depth-first': DFS,
 };
@@ -41,11 +40,13 @@ export async function paint([row, col]) {
 	}
 	const block = document.getElementById(`${row},${col}`);
 	await wait(paintSpeed);
-	block.style.backgroundColor = '#e9ed68';
+	block.classList.add('visualized');
 	return true;
 }
 
 let paintSpeed = 10;
+
+export let allowDiagonalMovements = false;
 
 function App() {
 	const [states, dispatch] = useReducer(reducer, {
@@ -55,6 +56,8 @@ function App() {
 		algorithm: algorithms[0],
 		reload: false,
 	});
+
+	const matrixRef = useRef(null);
 
 	const { matrix, source, dest, error, speed, algorithm, reload } = states;
 
@@ -73,8 +76,6 @@ function App() {
 		// update the state the next time around to prevent it from being processed again
 		update = false;
 
-		const { source, dest, matrix, algorithm, speed } = states;
-
 		const [row1, col1] = source;
 		const [row2, col2] = dest;
 		let _matrix;
@@ -84,7 +85,7 @@ function App() {
 			_matrix = Object.assign([], matrix);
 		}
 
-		document.getElementById('matrix').scrollIntoView();
+		matrixRef.current.scrollIntoView();
 
 		const pathFinder = algorithmMap[algorithm];
 		const path = await pathFinder(_matrix, row1, col1, row2, col2);
@@ -109,12 +110,12 @@ function App() {
 			if (speed > 0) {
 				await wait(speed);
 			}
-			entry.style.backgroundColor = '#ebc634';
+			entry.classList.add('path-vertex');
 		}
 	};
 
 	const onMatrixChanged = (event) => {
-		const str = removeAllSpaces(event.target.value);
+		const str = event.target.value.trimEnd();
 		const validate = isValidMatrixStr(str);
 		if (!validate) {
 			dispatch({
@@ -123,7 +124,6 @@ function App() {
 			});
 			return;
 		}
-		const { error } = states;
 		if (error === errors.invalidMatrix) {
 			dispatch({
 				type: 'error',
@@ -139,7 +139,7 @@ function App() {
 	};
 
 	const changeCoords = (value) => {
-		const str = removeAllSpaces(value);
+		const str = value.trimEnd();
 		const coord = strToCoord(str);
 		if (!coord) {
 			dispatch({
@@ -148,7 +148,6 @@ function App() {
 			});
 			return;
 		}
-		const { error } = states;
 		if (error === errors.invalidCoords || error === errors.invalidSrcOrDest) {
 			dispatch({
 				type: 'error',
@@ -178,21 +177,24 @@ function App() {
 		}
 	};
 
-	const onSpeedChanged = (event) => {
+	const onSpeedChanged = (event) =>
 		dispatch({
 			type: 'speed',
 			data: +event.target.value,
 		});
-	};
 
-	const onAlgorithmChanged = (event) => {
+	const onAlgorithmChanged = (event) =>
 		dispatch({
 			type: 'algorithm',
 			data: event.target.value,
 		});
-	};
 
 	const onReload = () => dispatch({ type: 'reload', data: !reload });
+
+	const onAllowDiagonalMovements = (event) => {
+		allowDiagonalMovements = event.target.checked;
+		dispatch({ type: 'reload', data: !reload });
+	};
 
 	const events = {
 		onSubmit,
@@ -201,6 +203,7 @@ function App() {
 		onDestChanged,
 		onSpeedChanged,
 		onAlgorithmChanged,
+		onAllowDiagonalMovements,
 		onReload,
 	};
 
@@ -214,7 +217,7 @@ function App() {
 		>
 			<Controller {...{ error, ...events }} />
 			<div className="center">
-				<Matrix error={!!error} />
+				<Matrix error={!!error} ref={matrixRef} />
 			</div>
 		</MatrixContext.Provider>
 	);
