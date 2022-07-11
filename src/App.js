@@ -1,8 +1,7 @@
 import { useEffect, useReducer, useRef } from 'react';
 import { strToCoord, isValidMatrixStr, getRandomEntry } from './util';
 import { BFS, DFS, algorithms } from './algs';
-import Matrix from './components/Matrix';
-import Controller from './components/Controller';
+import { Matrix, Controller } from './components';
 import matrices from './matrices.json';
 import MatrixContext from './MatrixContext';
 import { wait } from './util';
@@ -135,6 +134,7 @@ function App() {
 				type: 'matrix',
 				data: JSON.parse(str),
 			});
+			// eslint-disable-next-line no-empty
 		} catch (err) {}
 	};
 
