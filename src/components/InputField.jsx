@@ -29,6 +29,7 @@ export function CheckboxField({ label, id, children, ...props }) {
 		<div className="input-field checkbox-field">
 			<label htmlFor={id}>{label}</label>
 			<input type="checkbox" id={id} {...props} />
+			{children}
 		</div>
 	);
 }
