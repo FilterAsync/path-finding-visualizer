@@ -1,10 +1,14 @@
 import { useContext } from 'react';
 import MatrixContext from '../MatrixContext';
 import { matrixToStr, arrToCoordStr } from '../util';
-import { InputField, DropdownField, CheckboxField } from './InputField';
 import { algorithms } from '../algs';
-import FlexContainer from './FlexContainer';
-import ButtonListRow from './ButtonListRow';
+import {
+	FlexContainer,
+	ButtonListRow,
+	InputField,
+	DropdownField,
+	CheckboxField,
+} from '.';
 
 function Controller({
 	error,
