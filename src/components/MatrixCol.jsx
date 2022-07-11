@@ -27,6 +27,7 @@ function MatrixCol({ value, row, col, source, dest, children, ...props }) {
 			{row}
 			<sub>{col}</sub>
 			{cost}
+			{children}
 		</div>
 	);
 }
