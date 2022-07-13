@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import MatrixContext from '../MatrixContext';
 import { CreateUUID } from '../util';
-import { MatrixCol, MatrixRow } from './components';
+import { MatrixCol, MatrixRow } from '.';
 
 // eslint-disable-next-line no-unused-vars
 const Matrix = React.forwardRef(function Matrix({ error, ...props }, ref) {
