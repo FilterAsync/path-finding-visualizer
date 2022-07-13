@@ -3,9 +3,9 @@ import { paint, allowDiagonalMovements } from './App';
 function neighbors(M, row, col) {
 	let neighbors = [
 		[row - 1, col],
+		[row, col + 1],
 		[row + 1, col],
 		[row, col - 1],
-		[row, col + 1],
 	];
 	if (allowDiagonalMovements) {
 		neighbors = [
