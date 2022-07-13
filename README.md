@@ -1,6 +1,6 @@
 # path-finding-visualizer
 
-A visualization tool for pathfinding algorithms in binary matrices.
+A visualization tool for pathfinding algorithms in binary matrices. You can see it [here](https://filterasync.github.io/path-finding-visualizer).
 
 This project is currently **WIP**. It will get more updates as time passes.
 
